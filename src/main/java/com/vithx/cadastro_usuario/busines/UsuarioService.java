@@ -4,6 +4,8 @@ import com.vithx.cadastro_usuario.infrastructure.entitys.Usuario;
 import com.vithx.cadastro_usuario.infrastructure.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UsuarioService {
 
@@ -23,6 +25,10 @@ public class UsuarioService {
         );
     }
 
+    public List<Usuario> buscarTodos(){
+        return repository.findAll();
+    }
+
     public void deletarUsuarioPorEmail(String email) {
         repository.deleteByEmail(email);
     }
@@ -36,6 +42,8 @@ public class UsuarioService {
                 .nome(usuario.getNome() != null ? usuario.getNome() : usuarioSalvo.getNome())    //se nao ele pega do ja existente
                 .id(usuarioSalvo.getId())
                 .build();
+
+        repository.saveAndFlush(usuarioAtualizado);
     }
 
 }
